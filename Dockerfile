@@ -15,3 +15,6 @@ RUN echo "/opt/kafka/bin/kafka-console-consumer.sh --zookeeper zookeeper.service
     echo "/opt/kafka/bin/kafka-run-class.sh kafka.admin.TopicCommand --zookeeper zookeeper.service.consul:2181 --topic ring0 --describe" >> /root/.bash_history && \
     echo "/opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic ring0" >> /root/.bash_history && \
     echo "/opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper.service.consul:2181 --describe --topic \$(/opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper.service.consul:2181 --list|xargs|sed -e 's/ /,/g')" >> /root/.bash_history
+
+## Temporarily until moved to qnib/consul
+ADD opt/qnib/consul/etc/bash_functions /opt/qnib/consul/etc/
