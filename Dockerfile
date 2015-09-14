@@ -10,4 +10,7 @@ ADD opt/kafka/config/server.properties /opt/kafka/config/
 ADD opt/qnib/kafka/bin/*.sh /opt/qnib/kafka/bin/
 ADD etc/consul.d/kafka.json /etc/consul.d/
 ADD etc/consul-templates/kafka.server.properties.ctmpl /etc/consul-templates/
-RUN echo "/opt/kafka/bin/kafka-console-consumer.sh --zookeeper zookeeper.service.consul:2181 --topic syslog" >> /root/.bash_history
+RUN echo "/opt/kafka/bin/kafka-console-consumer.sh --zookeeper zookeeper.service.consul:2181 --topic syslog" >> /root/.bash_history && \
+    echo "/opt/kafka/bin/kafka-topics.sh --zookeeper zookeeper.service.consul:2181 --replication-factor 3 --partitions 1 --create --topic ring0" >> /root/.bash_history && \
+    echo "/opt/kafka/bin/kafka-run-class.sh kafka.admin.TopicCommand --zookeeper zookeeper.service.consul:2181 --topic ring0 --describe" >> /root/.bash_history && \
+    echo "/opt/kafka/bin/kafka-console-producer.sh --broker-list localhost:9092 --topic ring0" >> /root/.bash_history
